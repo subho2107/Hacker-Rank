@@ -27,7 +27,16 @@ class SinglyLinkedList:
 
         self.tail = node
 
-# Complete the printLinkedList function below.
+def print_singly_linked_list(node, sep, fptr):
+    while node:
+        fptr.write(str(node.data))
+
+        node = node.next
+
+        if node:
+            fptr.write(sep)
+
+# Complete the insertNodeAtPosition function below.
 
 #
 # For your reference:
@@ -37,13 +46,20 @@ class SinglyLinkedList:
 #     SinglyLinkedListNode next
 #
 #
-def printLinkedList(head):
-        while(head != None):
-          print ("%d" % head.data)
-          head = head.next
+def insertNodeAtPosition(head, data, position):
+    returnHead = SinglyLinkedListNode(0)
+    returnHead.next = head
+    for cnt in range(0, position-1):
+        head = head.next
+    newNode = SinglyLinkedListNode(data)
+    newNode.next = head.next
+    head.next = newNode
+    return returnHead.next
 
 
 if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
     llist_count = int(input())
 
     llist = SinglyLinkedList()
@@ -52,5 +68,13 @@ if __name__ == '__main__':
         llist_item = int(input())
         llist.insert_node(llist_item)
 
-    printLinkedList(llist.head)
-© 2020 GitHub, Inc.
+    data = int(input())
+
+    position = int(input())
+
+    llist_head = insertNodeAtPosition(llist.head, data, position)
+
+    print_singly_linked_list(llist_head, ' ', fptr)
+    fptr.write('\n')
+
+    fptr.close()

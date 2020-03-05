@@ -27,7 +27,16 @@ class SinglyLinkedList:
 
         self.tail = node
 
-# Complete the printLinkedList function below.
+def print_singly_linked_list(node, sep, fptr):
+    while node:
+        fptr.write(str(node.data))
+
+        node = node.next
+
+        if node:
+            fptr.write(sep)
+
+# Complete the deleteNode function below.
 
 #
 # For your reference:
@@ -37,13 +46,21 @@ class SinglyLinkedList:
 #     SinglyLinkedListNode next
 #
 #
-def printLinkedList(head):
-        while(head != None):
-          print ("%d" % head.data)
-          head = head.next
-
+def deleteNode(head, position):
+    returnHead = SinglyLinkedListNode(0)
+    returnHead.next = head
+    if(position!=0):
+        for pos in range(0, position-1):
+            head = head.next
+        head.next = head.next.next
+    else:
+        head = head.next
+        returnHead.next = head
+    return returnHead.next
 
 if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
     llist_count = int(input())
 
     llist = SinglyLinkedList()
@@ -52,5 +69,11 @@ if __name__ == '__main__':
         llist_item = int(input())
         llist.insert_node(llist_item)
 
-    printLinkedList(llist.head)
-© 2020 GitHub, Inc.
+    position = int(input())
+
+    llist1 = deleteNode(llist.head, position)
+
+    print_singly_linked_list(llist1, ' ', fptr)
+    fptr.write('\n')
+
+    fptr.close()
